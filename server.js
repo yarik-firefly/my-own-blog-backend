@@ -11,9 +11,7 @@ import { checkAuth, handleValidatorError } from "./utils/index.js";
 import cors from "cors";
 
 mongoose
-  .connect(
-    "mongodb+srv://Yaroslav:Yarik2002@cluster0.6ypnjpm.mongodb.net/blog?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("DB ok!");
   })
@@ -72,7 +70,7 @@ app.post("/posts", checkAuth, postCreateValidator, PostController.create);
 app.delete("/posts/:id", checkAuth, PostController.remove);
 app.patch("/posts/:id", checkAuth, postCreateValidator, PostController.update);
 
-app.listen(port, (err) => {
+app.listen(process.env.PORT || port, (err) => {
   if (err) {
     return console.error(err);
   }
