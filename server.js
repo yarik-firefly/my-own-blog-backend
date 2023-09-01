@@ -39,7 +39,7 @@ const upload = multer({ storage });
 const port = process.env.PORT || 4444;
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
