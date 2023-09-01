@@ -36,8 +36,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const port = process.env.PORT || 4444;
-
 app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static("uploads"));
@@ -74,7 +72,7 @@ app.post("/posts", checkAuth, postCreateValidator, PostController.create);
 app.delete("/posts/:id", checkAuth, PostController.remove);
 app.patch("/posts/:id", checkAuth, postCreateValidator, PostController.update);
 
-app.listen(port, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
     return console.error(err);
   }
