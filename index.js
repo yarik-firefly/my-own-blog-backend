@@ -4,15 +4,22 @@ import {
   registerValidator,
   loginValidator,
   postCreateValidator,
+  commentCreateValidator,
 } from "./validations/validations.js";
 import multer from "multer";
-import { PostController, UserController } from "./controllers/index.js";
+import {
+  CommentController,
+  PostController,
+  UserController,
+} from "./controllers/index.js";
 import { checkAuth, handleValidatorError } from "./utils/index.js";
 import cors from "cors";
 import fs from "fs";
 
 mongoose
-  .connect(process.env.MONGODB_URL)
+  .connect(
+    "mongodb+srv://Yaroslav:Yarik2002@cluster0.6ypnjpm.mongodb.net/blog?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("DB ok!");
   })
@@ -66,13 +73,22 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
 
 app.get("/posts", PostController.getAll);
 app.get("/tags", PostController.getLastTags);
+app.get("/posts/comment/:id", CommentController.getOneComment);
+app.get("/posts/comments", CommentController.getAll);
+
+app.post(
+  "/posts/:id",
+  checkAuth,
+  commentCreateValidator,
+  CommentController.createComment
+);
 
 app.get("/posts/:id", PostController.getOne);
 app.post("/posts", checkAuth, postCreateValidator, PostController.create);
 app.delete("/posts/:id", checkAuth, PostController.remove);
 app.patch("/posts/:id", checkAuth, postCreateValidator, PostController.update);
 
-app.listen(process.env.PORT || 4444, (err) => {
+app.listen(4444, (err) => {
   if (err) {
     return console.error(err);
   }

@@ -21,8 +21,9 @@ export const getLastTags = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const posts = await PostModel.find().populate("user").exec();
+    const popularPosts = await PostModel.find().limit(5).sort("-viewsCount");
 
-    res.json(posts);
+    res.json({ posts, popularPosts });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -131,7 +132,7 @@ export const create = async (req, res) => {
   try {
     const doc = new PostModel({
       title: req.body.title,
-      text: req.body.text,
+      text: req.body.value,
       tags: req.body.tags.split(","),
       imageUrl: req.body.imageUrl,
       user: req.userId,

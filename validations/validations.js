@@ -28,3 +28,11 @@ export const postCreateValidator = [
   body("tags", "Неверный формат тэгов").optional().isString(),
   body("imageUrl", "Неверная ссылка на изображение").optional().isString(),
 ];
+
+export const commentCreateValidator = [
+  body("text", "Напишите комментарий")
+    .isLength({
+      min: 3,
+    })
+    .isString(),
+];
