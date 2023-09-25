@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 export const authMe = async (req, res) => {
   try {
     const user = await UserModel.findById(req.userId);
+    console.log(123);
 
     if (!user) {
       return res.status(404).json({
