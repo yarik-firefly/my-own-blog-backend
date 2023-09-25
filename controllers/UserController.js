@@ -74,7 +74,7 @@ export const register = async (req, res) => {
     const doc = new UserModel({
       email: req.body.email,
       fullname: req.body.fullname,
-      avatarUrl: req.body.avatarUrl,
+      avatarUrl: req.body?.avatarUrl,
       passwordHash: hash,
     });
 
@@ -96,6 +96,7 @@ export const register = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
+      status: err,
       message: "Не удалось зарегестрироваться!",
     });
   }
