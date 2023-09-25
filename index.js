@@ -17,12 +17,7 @@ import cors from "cors";
 import fs from "fs";
 
 mongoose
-  .connect(
-    `${
-      process.env.MONGO_DB_BASE ||
-      "mongodb+srv://Yaroslav:Varshava2002@cluster0.6ypnjpm.mongodb.net/blog?retryWrites=true&w=majority"
-    }`
-  )
+  .connect(process.env.MONGO_DB_BASE)
   .then(() => {
     console.log("DB ok!");
   })
