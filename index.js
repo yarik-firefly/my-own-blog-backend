@@ -18,7 +18,10 @@ import fs from "fs";
 
 mongoose
   .connect(
-    "mongodb+srv://Yaroslav:Yarik2002@cluster0.6ypnjpm.mongodb.net/blog?retryWrites=true&w=majority"
+    `${
+      process.env.MONGO_DB_BASE ||
+      "mongodb+srv://Yaroslav:Varshava2002@cluster0.6ypnjpm.mongodb.net/blog?retryWrites=true&w=majority"
+    }`
   )
   .then(() => {
     console.log("DB ok!");
@@ -28,6 +31,8 @@ mongoose
   });
 
 const app = express();
+
+const PORT = process.env.PORT || 4444;
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
@@ -88,7 +93,7 @@ app.post("/posts", checkAuth, postCreateValidator, PostController.create);
 app.delete("/posts/:id", checkAuth, PostController.remove);
 app.patch("/posts/:id", checkAuth, postCreateValidator, PostController.update);
 
-app.listen(4444, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
     return console.error(err);
   }
