@@ -1,6 +1,10 @@
 {
   "name": "twitter-clone-beckend",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.16.0",
+    "npm": "9.5.1"
+  },
   "description": "",
   "main": "server.js",
   "type": "module",
