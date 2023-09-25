@@ -17,10 +17,14 @@ import cors from "cors";
 import fs from "fs";
 
 mongoose
-  .connect(process.env.MONGO_DB_BASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    process.env.MONGO_DB_BASE ||
+      "mongodb+srv://Yaroslav:Yarik2002@cluster0.6ypnjpm.mongodb.net/?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("DB ok!");
   })
@@ -70,7 +74,7 @@ app.post(
 
 app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
   res.json({
-    url: `/uploads/${req.file.originalname}`,
+    url: `uploads/${req.file.originalname}`,
   });
 });
 
